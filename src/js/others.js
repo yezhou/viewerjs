@@ -62,18 +62,18 @@ export default {
   },
 
   open() {
-    const { body } = this;
+   // const { body } = this;
 
-    addClass(body, CLASS_OPEN);
+   // addClass(body, CLASS_OPEN);
 
-    body.style.paddingRight = `${this.scrollbarWidth + (parseFloat(this.initialBodyComputedPaddingRight) || 0)}px`;
+   // body.style.paddingRight = `${this.scrollbarWidth + (parseFloat(this.initialBodyComputedPaddingRight) || 0)}px`;
   },
 
   close() {
-    const { body } = this;
+   // const { body } = this;
 
-    removeClass(body, CLASS_OPEN);
-    body.style.paddingRight = this.initialBodyPaddingRight;
+    //removeClass(body, CLASS_OPEN);
+   // body.style.paddingRight = this.initialBodyPaddingRight;
   },
 
   shown() {
