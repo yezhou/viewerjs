@@ -5,7 +5,7 @@
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2021-10-22T13:59:51.046Z
+ * Date: 2022-01-17T07:35:31.422Z
  */
 
 (function (global, factory) {
@@ -368,7 +368,6 @@
   var CLASS_INVISIBLE = "".concat(NAMESPACE, "-invisible");
   var CLASS_LOADING = "".concat(NAMESPACE, "-loading");
   var CLASS_MOVE = "".concat(NAMESPACE, "-move");
-  var CLASS_OPEN = "".concat(NAMESPACE, "-open");
   var CLASS_SHOW = "".concat(NAMESPACE, "-show");
   var CLASS_TRANSITION = "".concat(NAMESPACE, "-transition"); // Native events
 
@@ -2496,8 +2495,24 @@
           ratio = Math.min(Math.max(ratio, minZoomRatio), maxZoomRatio);
         }
 
-        if (_originalEvent && options.zoomRatio >= 0.055 && ratio > 0.95 && ratio < 1.05) {
-          ratio = 1;
+        if (_originalEvent) {
+          switch (_originalEvent.type) {
+            case 'wheel':
+              if (options.zoomRatio >= 0.055 && ratio > 0.95 && ratio < 1.05) {
+                ratio = 1;
+              }
+
+              break;
+
+            case 'pointermove':
+            case 'touchmove':
+            case 'mousemove':
+              if (ratio > 0.99 && ratio < 1.01) {
+                ratio = 1;
+              }
+
+              break;
+          }
         }
 
         var newWidth = naturalWidth * ratio;
@@ -3050,15 +3065,13 @@
         this.onFocusin = null;
       }
     },
-    open: function open() {
-      var body = this.body;
-      addClass(body, CLASS_OPEN);
-      body.style.paddingRight = "".concat(this.scrollbarWidth + (parseFloat(this.initialBodyComputedPaddingRight) || 0), "px");
+    open: function open() {// const { body } = this;
+      // addClass(body, CLASS_OPEN);
+      // body.style.paddingRight = `${this.scrollbarWidth + (parseFloat(this.initialBodyComputedPaddingRight) || 0)}px`;
     },
-    close: function close() {
-      var body = this.body;
-      removeClass(body, CLASS_OPEN);
-      body.style.paddingRight = this.initialBodyPaddingRight;
+    close: function close() {// const { body } = this;
+      //removeClass(body, CLASS_OPEN);
+      // body.style.paddingRight = this.initialBodyPaddingRight;
     },
     shown: function shown() {
       var element = this.element,
